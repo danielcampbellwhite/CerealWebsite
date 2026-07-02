@@ -1,11 +1,8 @@
 import { getAllCombos } from "@/lib/combo";
 import { ComboCard } from "@/components/ComboCard";
 
-// Always read fresh from the DB (combos change when you publish).
-export const dynamic = "force-dynamic";
-
-export default async function HomePage() {
-  const combos = await getAllCombos();
+export default function HomePage() {
+  const combos = getAllCombos();
 
   return (
     <div>
@@ -24,7 +21,7 @@ export default async function HomePage() {
       ) : (
         <div className="grid gap-6 sm:grid-cols-2">
           {combos.map((combo) => (
-            <ComboCard key={combo.id} combo={combo} />
+            <ComboCard key={combo.slug} combo={combo} />
           ))}
         </div>
       )}

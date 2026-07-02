@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { getAllCombos } from "@/lib/combo";
+import { getCombosByTag, getAllTags } from "@/lib/combo";
 import { ComboCard } from "@/components/ComboCard";
 
-export const dynamic = "force-dynamic";
+export function generateStaticParams() {
+  return getAllTags().map((tag) => ({ tag }));
+}
 
 export default async function TagPage({
   params,
@@ -11,9 +13,7 @@ export default async function TagPage({
 }) {
   const { tag } = await params;
   const decoded = decodeURIComponent(tag);
-  const combos = (await getAllCombos()).filter((c) =>
-    c.tags.includes(decoded)
-  );
+  const combos = getCombosByTag(decoded);
 
   return (
     <div>
@@ -29,7 +29,7 @@ export default async function TagPage({
       ) : (
         <div className="grid gap-6 sm:grid-cols-2">
           {combos.map((combo) => (
-            <ComboCard key={combo.id} combo={combo} />
+            <ComboCard key={combo.slug} combo={combo} />
           ))}
         </div>
       )}

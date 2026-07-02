@@ -1,27 +1,29 @@
-import { db } from "./db";
+import { combos as rawCombos } from "@/content/combos";
 
-// SQLite has no array type, so list fields (cereals/photos/tags) are stored as
-// JSON strings. These helpers convert a raw DB row into a friendly UI shape.
+// Combos are authored in code (content/combos.ts). This module normalizes
+// that authoring format into the shape the UI uses, and exposes lookups.
 
-export type ComboRow = {
-  id: string;
-  slug: string;
+// What you write in content/combos.ts:
+export type ComboInput = {
   title: string;
-  cereals: string;
-  photos: string;
-  notes: string;
-  overallBowls: number;
+  /** Optional — auto-derived from the title if omitted. */
+  slug?: string;
+  cereals: string[];
+  /** "/photos/foo.jpg" (file in public/) or a full https:// URL. */
+  photos: string[];
+  /** ISO date, e.g. "2026-07-02". */
+  date: string;
+  overall: number;
   taste: number;
   crunch: number;
   aftermilk: number;
   sogginess: number;
-  tags: string;
-  createdAt: string;
-  updatedAt: string;
+  tags: string[];
+  notes: string;
 };
 
+// What the UI consumes:
 export type ComboView = {
-  id: string;
   slug: string;
   title: string;
   cereals: string[];
@@ -36,33 +38,6 @@ export type ComboView = {
   createdAt: Date;
 };
 
-function parseList(raw: string): string[] {
-  try {
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed.map(String) : [];
-  } catch {
-    return [];
-  }
-}
-
-function toView(row: ComboRow): ComboView {
-  return {
-    id: row.id,
-    slug: row.slug,
-    title: row.title,
-    cereals: parseList(row.cereals),
-    photos: parseList(row.photos),
-    notes: row.notes,
-    overallBowls: row.overallBowls,
-    taste: row.taste,
-    crunch: row.crunch,
-    aftermilk: row.aftermilk,
-    sogginess: row.sogginess,
-    tags: parseList(row.tags),
-    createdAt: new Date(row.createdAt),
-  };
-}
-
 export const SUB_SCORES = [
   { key: "taste", label: "Taste" },
   { key: "crunch", label: "Crunch longevity" },
@@ -70,27 +45,60 @@ export const SUB_SCORES = [
   { key: "sogginess", label: "Sogginess resistance" },
 ] as const;
 
-export async function getAllCombos(): Promise<ComboView[]> {
-  const rows = db
-    .prepare("SELECT * FROM combos ORDER BY createdAt DESC")
-    .all() as ComboRow[];
-  return rows.map(toView);
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/×/g, "x")
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 }
 
-export async function getCombosByRating(): Promise<ComboView[]> {
-  const rows = db
-    .prepare(
-      "SELECT * FROM combos ORDER BY overallBowls DESC, createdAt DESC"
-    )
-    .all() as ComboRow[];
-  return rows.map(toView);
+function toView(input: ComboInput): ComboView {
+  return {
+    slug: input.slug ?? slugify(input.title),
+    title: input.title,
+    cereals: input.cereals,
+    photos: input.photos,
+    notes: input.notes,
+    overallBowls: input.overall,
+    taste: input.taste,
+    crunch: input.crunch,
+    aftermilk: input.aftermilk,
+    sogginess: input.sogginess,
+    tags: input.tags,
+    createdAt: new Date(input.date),
+  };
 }
 
-export async function getComboBySlug(
-  slug: string
-): Promise<ComboView | null> {
-  const row = db
-    .prepare("SELECT * FROM combos WHERE slug = ?")
-    .get(slug) as ComboRow | undefined;
-  return row ? toView(row) : null;
+const ALL: ComboView[] = rawCombos.map(toView);
+
+export function getAllCombos(): ComboView[] {
+  return [...ALL].sort(
+    (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+  );
+}
+
+export function getCombosByRating(): ComboView[] {
+  return [...ALL].sort(
+    (a, b) =>
+      b.overallBowls - a.overallBowls ||
+      b.createdAt.getTime() - a.createdAt.getTime()
+  );
+}
+
+export function getComboBySlug(slug: string): ComboView | undefined {
+  return ALL.find((c) => c.slug === slug);
+}
+
+export function getAllSlugs(): string[] {
+  return ALL.map((c) => c.slug);
+}
+
+export function getAllTags(): string[] {
+  return [...new Set(ALL.flatMap((c) => c.tags))];
+}
+
+export function getCombosByTag(tag: string): ComboView[] {
+  return getAllCombos().filter((c) => c.tags.includes(tag));
 }

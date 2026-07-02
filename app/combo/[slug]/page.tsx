@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getComboBySlug, SUB_SCORES } from "@/lib/combo";
+import { getComboBySlug, getAllSlugs, SUB_SCORES } from "@/lib/combo";
 import { BowlScore } from "@/components/BowlScore";
 
-export const dynamic = "force-dynamic";
+export function generateStaticParams() {
+  return getAllSlugs().map((slug) => ({ slug }));
+}
 
 export default async function ComboPage({
   params,
@@ -11,7 +13,7 @@ export default async function ComboPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const combo = await getComboBySlug(slug);
+  const combo = getComboBySlug(slug);
   if (!combo) notFound();
 
   return (

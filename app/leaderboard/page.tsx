@@ -2,10 +2,8 @@ import Link from "next/link";
 import { getCombosByRating } from "@/lib/combo";
 import { BowlScore } from "@/components/BowlScore";
 
-export const dynamic = "force-dynamic";
-
-export default async function LeaderboardPage() {
-  const combos = await getCombosByRating();
+export default function LeaderboardPage() {
+  const combos = getCombosByRating();
 
   return (
     <div>
@@ -21,7 +19,7 @@ export default async function LeaderboardPage() {
       ) : (
         <ol className="space-y-2">
           {combos.map((combo, i) => (
-            <li key={combo.id}>
+            <li key={combo.slug}>
               <Link
                 href={`/combo/${combo.slug}`}
                 className="flex items-center gap-4 bg-white rounded-xl px-4 py-3 border-2 border-berry/10 hover:border-berry/40 transition-colors"

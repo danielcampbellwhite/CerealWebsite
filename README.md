@@ -13,51 +13,60 @@ Each **combo** review has:
 - Four sub-scores (each 1–5): **Taste**, **Crunch longevity**, **Aftermilk**, **Sogginess resistance**
 - Written verdict + tags
 
+## Adding a review (it's all in code)
+
+1. Put your bowl photo(s) in **`public/photos/`** (e.g. `public/photos/ctc-cheerios.jpg`).
+2. Open **`content/combos.ts`** and copy the template block to the top of the array.
+3. Fill it in — reference photos as `"/photos/ctc-cheerios.jpg"` (or paste a full `https://` URL).
+4. Save. The feed, combo page, leaderboard, and tag pages all update automatically.
+
+```ts
+{
+  title: "Cinnamon Toast Crunch × Honey Nut Cheerios",
+  cereals: ["Cinnamon Toast Crunch", "Honey Nut Cheerios"],
+  photos: ["/photos/ctc-cheerios.jpg"],
+  date: "2026-07-02",
+  overall: 5,               // your final verdict, 1–5
+  taste: 5, crunch: 5, aftermilk: 5, sogginess: 4,
+  tags: ["cinnamon", "honey"],
+  notes: `Peak synergy. The aftermilk is the best I've had...`,
+}
+```
+
+The URL slug is auto-generated from the title (override with an optional `slug` field).
+
 ## Tech stack
 
-- **Next.js 15** (App Router) + **TypeScript**
-- **SQLite** via Node's built-in [`node:sqlite`](https://nodejs.org/api/sqlite.html) — no native binaries to install
+- **Next.js 15** (App Router) + **TypeScript** — fully static output
 - **Tailwind CSS v4**
+- No database, no backend: reviews are a typed data file, so hosting is free and simple.
 
 ## Getting started
 
 ```bash
 npm install
-cp .env.example .env      # then edit values
-npm run db:seed           # create + seed data/cereal.db with sample combos
-npm run dev               # http://localhost:3000
+npm run dev        # http://localhost:3000
 ```
 
 ## Scripts
 
-| Script            | What it does                                   |
-| ----------------- | ---------------------------------------------- |
-| `npm run dev`     | Start the dev server                           |
-| `npm run build`   | Production build                               |
-| `npm run start`   | Serve the production build                     |
-| `npm run db:seed` | Create/seed the SQLite database                |
-| `npm run db:reset`| Delete and re-seed the database                |
+| Script          | What it does               |
+| --------------- | -------------------------- |
+| `npm run dev`   | Start the dev server       |
+| `npm run build` | Production (static) build  |
+| `npm run start` | Serve the production build |
 
 ## Pages
 
-| Route            | Description                              |
-| ---------------- | ---------------------------------------- |
-| `/`              | Home feed — latest combos, newest first  |
-| `/combo/[slug]`  | Full review: photos, bowl scores, verdict|
-| `/leaderboard`   | Every combo ranked, best synergy to worst|
-| `/tags/[tag]`    | Combos matching a tag                    |
+| Route           | Description                               |
+| --------------- | ----------------------------------------- |
+| `/`             | Home feed — latest combos, newest first   |
+| `/combo/[slug]` | Full review: photos, bowl scores, verdict |
+| `/leaderboard`  | Every combo ranked, best synergy to worst |
+| `/tags/[tag]`   | Combos matching a tag                     |
 
 ## Roadmap
 
-- **M1 — Scaffold + public site** ✅ _(data model, home feed, combo pages, leaderboard, tags)_
-- **M3 — Admin** — password login + create/edit form with photo upload (Cloudinary)
-- **M4 — Filtering & polish**
-- **M5 — Deploy** (Vercel; swap SQLite for hosted Postgres)
-
-Later: comments, cereal "pantry" pages, combo randomizer, milk-type field, aggregate stats.
-
-## Data layer notes
-
-SQLite has no array type, so list fields (`cereals`, `photos`, `tags`) are stored as
-JSON strings and parsed in `lib/combo.ts`. The whole app reads data only through
-`lib/combo.ts`, so moving to Postgres later means changing just that file and `lib/db.ts`.
+- **M1 — Scaffold + public site** ✅
+- **Deploy** — push to Vercel (or any static host); no config needed
+- Later: comments, cereal "pantry" pages, combo randomizer, milk-type field, aggregate stats

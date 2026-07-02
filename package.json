@@ -6,9 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "db:seed": "node scripts/seed.mjs",
-    "db:reset": "rm -f data/cereal.db && node scripts/seed.mjs"
+    "lint": "next lint"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.2",
@@ -23,7 +21,6 @@
   "dependencies": {
     "next": "^15.5.20",
     "react": "^19.2.7",
-    "react-dom": "^19.2.7",
-    "zod": "^4.4.3"
+    "react-dom": "^19.2.7"
   }
 }
