@@ -17,24 +17,24 @@ export default async function ComboPage({
   if (!combo) notFound();
 
   return (
-    <article>
+    <article className="max-w-3xl mx-auto">
       <Link
         href="/"
-        className="inline-block text-sm font-extrabold uppercase tracking-wide text-berry hover:underline"
+        className="inline-block text-sm font-extrabold uppercase tracking-wide text-blue hover:underline"
       >
-        ← Back to feed
+        ← Back to browse
       </Link>
 
       <header className="mt-4">
-        <h1 className="wordmark text-3xl sm:text-4xl text-cocoa leading-tight">
+        <h1 className="wordmark text-3xl sm:text-4xl leading-tight">
           {combo.title}
         </h1>
-        <p className="text-lg font-bold text-cocoa/50 mt-1">
+        <p className="text-lg font-bold text-navy/50 mt-1">
           {combo.cereals.join(" × ")}
         </p>
-        <div className="mt-4 inline-flex items-center gap-3 rounded-full bg-honey/30 border-2 border-honey px-4 py-2">
+        <div className="mt-4 inline-flex items-center gap-3 rounded-full bg-gold/20 border-2 border-gold px-4 py-2">
           <BowlScore value={combo.overallBowls} size="text-2xl" />
-          <span className="font-display font-black text-cocoa">
+          <span className="font-display font-black text-navy">
             {combo.overallBowls}/5 overall
           </span>
         </div>
@@ -48,7 +48,7 @@ export default async function ComboPage({
               key={i}
               src={url}
               alt={`${combo.title} — photo ${i + 1}`}
-              className="rounded-3xl w-full object-cover border-4 border-cocoa/10"
+              className="rounded-3xl w-full object-cover border border-navy/10"
             />
           ))}
         </div>
@@ -58,9 +58,9 @@ export default async function ComboPage({
         {SUB_SCORES.map(({ key, label }) => (
           <div
             key={key}
-            className="flex items-center justify-between bg-white rounded-2xl px-4 py-3 border-4 border-cocoa/10"
+            className="flex items-center justify-between bg-white rounded-2xl px-4 py-3 border border-navy/10"
           >
-            <span className="font-extrabold text-cocoa/80">{label}</span>
+            <span className="font-extrabold text-navy/80">{label}</span>
             <BowlScore value={combo[key]} size="text-base" />
           </div>
         ))}
@@ -68,9 +68,9 @@ export default async function ComboPage({
 
       {combo.notes && (
         <section className="mt-8">
-          <h2 className="wordmark text-2xl text-cocoa mb-1">The verdict</h2>
-          <div className="rainbow-rule w-20 mb-3" />
-          <p className="whitespace-pre-wrap leading-relaxed text-lg text-cocoa/90">
+          <h2 className="wordmark text-2xl mb-1">The verdict</h2>
+          <div className="brand-rule w-20 mb-3" />
+          <p className="whitespace-pre-wrap leading-relaxed text-lg text-navy/90">
             {combo.notes}
           </p>
         </section>
@@ -82,7 +82,7 @@ export default async function ComboPage({
             <Link
               key={tag}
               href={`/tags/${encodeURIComponent(tag)}`}
-              className="text-xs font-extrabold bg-grape/10 text-grape rounded-full px-3 py-1.5 hover:bg-grape hover:text-white transition-colors"
+              className="text-xs font-extrabold bg-blue/10 text-blue rounded-full px-3 py-1.5 hover:bg-blue hover:text-white transition-colors"
             >
               #{tag}
             </Link>
@@ -90,7 +90,7 @@ export default async function ComboPage({
         </div>
       )}
 
-      <p className="mt-8 text-sm font-bold text-cocoa/40">
+      <p className="mt-8 text-sm font-bold text-navy/40">
         Reviewed {combo.createdAt.toLocaleDateString()}
       </p>
     </article>

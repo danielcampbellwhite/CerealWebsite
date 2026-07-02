@@ -30,6 +30,51 @@ export const combos: ComboInput[] = [
   // },
 
   {
+    title: "Froot Loops × Apple Jacks",
+    cereals: ["Froot Loops", "Apple Jacks"],
+    photos: [
+      "https://images.unsplash.com/photo-1614961233913-a5113a4a34ed?w=800&q=80",
+    ],
+    date: "2026-07-02",
+    overall: 4,
+    taste: 5,
+    crunch: 3,
+    aftermilk: 4,
+    sogginess: 3,
+    tags: ["fruity", "sweet", "colorful"],
+    notes: `A carnival in a bowl. Two fruity heavyweights that somehow don't clash — the apple-cinnamon edge of Apple Jacks keeps Froot Loops from being one-note. Milk turns a suspicious but delightful pink. Loud, sugary, and proud of it.`,
+  },
+  {
+    title: "Cheerios × Special K",
+    cereals: ["Cheerios", "Special K"],
+    photos: [
+      "https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?w=800&q=80",
+    ],
+    date: "2026-06-30",
+    overall: 3,
+    taste: 3,
+    crunch: 4,
+    aftermilk: 2,
+    sogginess: 4,
+    tags: ["healthy-ish", "plain", "classic"],
+    notes: `The responsible-adult synergy. Nothing offensive, nothing thrilling. Great crunch retention, boring aftermilk. This is the combo you eat because you should, not because you want to. Reliable middle of the road.`,
+  },
+  {
+    title: "Cocoa Krispies × Rice Krispies",
+    cereals: ["Cocoa Krispies", "Rice Krispies"],
+    photos: [
+      "https://images.unsplash.com/photo-1521483451569-e33803c0330c?w=800&q=80",
+    ],
+    date: "2026-06-29",
+    overall: 4,
+    taste: 4,
+    crunch: 3,
+    aftermilk: 5,
+    sogginess: 2,
+    tags: ["chocolatey", "classic", "beginner-friendly"],
+    notes: `Snap, crackle, cocoa. The plain Rice Krispies stretch the chocolate further and mellow the sweetness. Goes soft fast, so eat with urgency — but the chocolate-malt aftermilk is worth the race.`,
+  },
+  {
     title: "Cinnamon Toast Crunch × Honey Nut Cheerios",
     cereals: ["Cinnamon Toast Crunch", "Honey Nut Cheerios"],
     photos: [

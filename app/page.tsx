@@ -1,45 +1,53 @@
-import { getAllCombos } from "@/lib/combo";
-import { ComboCard } from "@/components/ComboCard";
+import Image from "next/image";
+import { getAllCombos, getAllTags, getAllCereals } from "@/lib/combo";
+import { ComboExplorer } from "@/components/ComboExplorer";
 import { BowlScore } from "@/components/BowlScore";
 
 export default function HomePage() {
   const combos = getAllCombos();
+  const tags = getAllTags();
+  const cereals = getAllCereals();
 
   return (
     <div>
-      <section className="text-center mb-10 rounded-3xl bg-cream border-4 border-cocoa/10 px-6 py-10">
-        <p className="text-5xl mb-3">🥣✨🥣</p>
-        <h1 className="wordmark text-4xl sm:text-5xl text-berry leading-none">
-          Cereal Synergy
-        </h1>
-        <p className="mt-3 text-lg font-bold text-cocoa/70">
-          Mixing cereals so you don&apos;t have to. Rated on the{" "}
-          <BowlScore value={5} size="text-lg" /> scale.
-        </p>
+      <section className="mb-10 rounded-3xl bg-white border border-navy/10 shadow-sm overflow-hidden">
+        <div className="grid sm:grid-cols-[auto_1fr] items-center gap-6 p-6 sm:p-8">
+          <Image
+            src="/logo.png"
+            alt="Cereal Synergy logo"
+            width={160}
+            height={160}
+            priority
+            className="mx-auto rounded-full w-32 h-32 sm:w-40 sm:h-40"
+          />
+          <div className="text-center sm:text-left">
+            <h1 className="wordmark text-4xl sm:text-5xl leading-none">
+              Cereal Synergy
+            </h1>
+            <p className="mt-3 text-lg font-bold text-navy/70">
+              Mixing cereals so you don&apos;t have to. Every combo photographed,
+              reviewed, and rated on the{" "}
+              <span className="whitespace-nowrap">
+                <BowlScore value={5} size="text-lg" />
+              </span>{" "}
+              scale.
+            </p>
+            <div className="mt-4 flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-1 text-sm font-extrabold text-navy/50">
+              <span>{combos.length} combos</span>
+              <span>{cereals.length} cereals tested</span>
+              <span>{tags.length} tags</span>
+            </div>
+          </div>
+        </div>
+        <div className="brand-rule" />
       </section>
 
-      <div className="flex items-end justify-between mb-5">
-        <div>
-          <h2 className="wordmark text-2xl text-cocoa">Latest bowls</h2>
-          <div className="rainbow-rule w-24 mt-1.5" />
-        </div>
-        <span className="text-sm font-bold text-cocoa/50">
-          {combos.length} combo{combos.length === 1 ? "" : "s"}
-        </span>
+      <div className="mb-5">
+        <h2 className="wordmark text-2xl">Browse the bowls</h2>
+        <div className="brand-rule w-24 mt-1.5" />
       </div>
 
-      {combos.length === 0 ? (
-        <div className="text-center py-16 text-cocoa/50">
-          <div className="text-5xl mb-3">🥣</div>
-          <p className="font-bold">No combos yet. Time to start mixing.</p>
-        </div>
-      ) : (
-        <div className="grid gap-6 sm:grid-cols-2">
-          {combos.map((combo) => (
-            <ComboCard key={combo.slug} combo={combo} />
-          ))}
-        </div>
-      )}
+      <ComboExplorer combos={combos} allTags={tags} allCereals={cereals} />
     </div>
   );
 }

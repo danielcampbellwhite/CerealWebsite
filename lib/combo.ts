@@ -96,7 +96,11 @@ export function getAllSlugs(): string[] {
 }
 
 export function getAllTags(): string[] {
-  return [...new Set(ALL.flatMap((c) => c.tags))];
+  return [...new Set(ALL.flatMap((c) => c.tags))].sort();
+}
+
+export function getAllCereals(): string[] {
+  return [...new Set(ALL.flatMap((c) => c.cereals))].sort();
 }
 
 export function getCombosByTag(tag: string): ComboView[] {

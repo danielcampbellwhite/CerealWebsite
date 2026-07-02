@@ -4,13 +4,17 @@ import { BowlScore } from "./BowlScore";
 
 export function ComboCard({ combo }: { combo: ComboView }) {
   const cover = combo.photos[0];
+  const cerealsLine = combo.cereals.join(" × ");
+  // Avoid repeating the title when it's literally the cereals joined.
+  const showCereals = cerealsLine !== combo.title;
+
   return (
     <Link
       href={`/combo/${combo.slug}`}
-      className="group relative block rounded-3xl overflow-hidden bg-white border-4 border-cocoa/10 hover:border-berry transition-all hover:-translate-y-1 shadow-[0_4px_0_rgba(67,41,28,0.08)]"
+      className="group relative flex flex-col rounded-3xl overflow-hidden bg-white border border-navy/10 hover:border-blue transition-all hover:-translate-y-1 shadow-[0_6px_20px_-8px_rgba(18,35,79,0.25)]"
     >
       {/* Overall-score badge, corner-pinned. */}
-      <span className="absolute top-3 right-3 z-10 flex items-center gap-0.5 rounded-full bg-honey text-cocoa font-display font-black text-sm px-3 py-1 border-2 border-white shadow">
+      <span className="absolute top-3 right-3 z-10 flex items-baseline gap-0.5 rounded-full bg-gold text-navy font-display font-black text-sm px-3 py-1 border-2 border-white shadow-md">
         {combo.overallBowls}
         <span className="text-xs">/5</span>
       </span>
@@ -30,17 +34,19 @@ export function ComboCard({ combo }: { combo: ComboView }) {
         )}
       </div>
 
-      <div className="p-4">
-        <h3 className="font-display font-black text-lg leading-tight group-hover:text-berry">
+      <div className="p-4 flex-1 flex flex-col">
+        <h3 className="font-display font-black text-lg leading-tight text-navy group-hover:text-blue">
           {combo.title}
         </h3>
-        <p className="text-sm font-semibold text-cocoa/50 mt-0.5">
-          {combo.cereals.join(" × ")}
-        </p>
-        <div className="mt-2 flex items-center justify-between">
+        {showCereals && (
+          <p className="text-sm font-semibold text-navy/45 mt-0.5">
+            {cerealsLine}
+          </p>
+        )}
+        <div className="mt-auto pt-2 flex items-center justify-between">
           <BowlScore value={combo.overallBowls} size="text-base" />
           {combo.tags.length > 0 && (
-            <span className="text-xs font-bold text-grape">
+            <span className="text-xs font-bold text-blue">
               #{combo.tags[0]}
             </span>
           )}

@@ -1,15 +1,19 @@
 @import "tailwindcss";
 
-/* ── Cereal Synergy — playful retro theme ─────────────────────────────── */
+/* ── Cereal Synergy — gold + royal-blue theme (matches the logo) ───────── */
 @theme {
-  --color-milk: #fffdf7;
-  --color-cream: #fff2d6;
-  --color-berry: #ff4d6d;
-  --color-honey: #ffb703;
-  --color-cocoa: #43291c;
-  --color-mint: #2ec4b6;
-  --color-sky: #4cc9f0;
-  --color-grape: #7b4bd6;
+  --color-milk: #fbfcff;
+  --color-cream: #fff4d6;
+  --color-gold: #f5a623;
+  --color-gold-deep: #dd8600;
+  --color-blue: #2456c9;
+  --color-blue-deep: #143d92;
+  --color-navy: #12234f;
+  /* cereal-bit accent pops */
+  --color-berry: #ff5a5f;
+  --color-mint: #1fc4a4;
+  --color-grape: #8b5cf6;
+  --color-lime: #8bc34a;
 
   --font-display: "Arial Rounded MT Bold", "Baloo 2", ui-rounded, system-ui,
     sans-serif;
@@ -20,35 +24,51 @@
 }
 
 body {
-  color: var(--color-cocoa);
+  color: var(--color-navy);
   background-color: var(--color-milk);
-  /* Soft polka-dot "sprinkles" backdrop. */
-  background-image: radial-gradient(
-    circle,
-    rgba(255, 183, 3, 0.14) 1.5px,
-    transparent 1.6px
-  );
-  background-size: 22px 22px;
+  /* Faint two-tone "sprinkle" backdrop echoing the gold/blue ring. */
+  background-image:
+    radial-gradient(circle, rgba(36, 86, 201, 0.06) 1.5px, transparent 1.6px),
+    radial-gradient(circle, rgba(245, 166, 35, 0.08) 1.5px, transparent 1.6px);
+  background-size: 26px 26px, 26px 26px;
+  background-position: 0 0, 13px 13px;
 }
 
-/* Chunky retro wordmark treatment. */
+/* Gold→blue gradient wordmark, echoing the logo ring. */
 .wordmark {
   font-family: var(--font-display);
   font-weight: 900;
   letter-spacing: -0.02em;
-  text-shadow: 2px 2px 0 rgba(67, 41, 28, 0.15);
+  background: linear-gradient(
+    100deg,
+    var(--color-gold-deep) 0%,
+    var(--color-gold) 35%,
+    var(--color-blue) 65%,
+    var(--color-blue-deep) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-/* Rainbow underline used under section headings. */
+/* Gold→blue rule used under section headings + as the footer band. */
+.brand-rule {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-gold), var(--color-blue));
+}
+
+/* Multicolor rule echoing the rainbow cereal bits. */
 .rainbow-rule {
   height: 6px;
   border-radius: 999px;
   background: linear-gradient(
     90deg,
     var(--color-berry),
-    var(--color-honey),
+    var(--color-gold),
+    var(--color-lime),
     var(--color-mint),
-    var(--color-sky),
+    var(--color-blue),
     var(--color-grape)
   );
 }
