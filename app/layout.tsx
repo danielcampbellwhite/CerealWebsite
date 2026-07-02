@@ -4,7 +4,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Cereal Synergy",
-  description: "Two cereals. One bowl. Infinite science. Reviews of cereal combinations.",
+  description:
+    "Two cereals. One bowl. Infinite science. Reviews of cereal combinations.",
 };
 
 export default function RootLayout({
@@ -15,17 +16,29 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col">
-        <header className="border-b-2 border-berry/20 bg-cream">
-          <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-            <Link href="/" className="flex items-baseline gap-2">
-              <span className="text-2xl">🥣</span>
-              <span className="text-2xl font-black text-berry tracking-tight">
+        <header className="bg-cream border-b-4 border-berry">
+          <div className="max-w-4xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-3">
+            <Link href="/" className="flex items-center gap-2 group">
+              <span className="text-3xl group-hover:-rotate-12 transition-transform">
+                🥣
+              </span>
+              <span className="wordmark text-2xl sm:text-3xl text-berry">
                 Cereal Synergy
               </span>
             </Link>
-            <nav className="flex gap-4 text-sm font-semibold">
-              <Link href="/" className="hover:text-berry">Feed</Link>
-              <Link href="/leaderboard" className="hover:text-berry">Leaderboard</Link>
+            <nav className="flex gap-2 text-sm font-extrabold uppercase tracking-wide">
+              <Link
+                href="/"
+                className="px-3 py-1.5 rounded-full bg-white border-2 border-cocoa/10 hover:border-berry hover:text-berry transition-colors"
+              >
+                Feed
+              </Link>
+              <Link
+                href="/leaderboard"
+                className="px-3 py-1.5 rounded-full bg-white border-2 border-cocoa/10 hover:border-berry hover:text-berry transition-colors"
+              >
+                Leaderboard
+              </Link>
             </nav>
           </div>
         </header>
@@ -34,8 +47,13 @@ export default function RootLayout({
           {children}
         </main>
 
-        <footer className="border-t-2 border-berry/10 py-6 text-center text-sm text-cocoa/60">
-          <p>Two cereals. One bowl. Infinite science.</p>
+        <footer className="mt-8">
+          <div className="rainbow-rule" />
+          <div className="bg-cream py-6 text-center">
+            <p className="wordmark text-lg text-cocoa/70">
+              Two cereals. One bowl. Infinite science.
+            </p>
+          </div>
         </footer>
       </body>
     </html>

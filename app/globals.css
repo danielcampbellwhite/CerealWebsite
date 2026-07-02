@@ -1,11 +1,18 @@
 @import "tailwindcss";
 
+/* ── Cereal Synergy — playful retro theme ─────────────────────────────── */
 @theme {
   --color-milk: #fffdf7;
-  --color-cream: #fff5e0;
-  --color-berry: #e23e57;
-  --color-cocoa: #5a3825;
-  --color-honey: #f6a821;
+  --color-cream: #fff2d6;
+  --color-berry: #ff4d6d;
+  --color-honey: #ffb703;
+  --color-cocoa: #43291c;
+  --color-mint: #2ec4b6;
+  --color-sky: #4cc9f0;
+  --color-grape: #7b4bd6;
+
+  --font-display: "Arial Rounded MT Bold", "Baloo 2", ui-rounded, system-ui,
+    sans-serif;
 }
 
 :root {
@@ -13,6 +20,35 @@
 }
 
 body {
-  background-color: var(--color-milk);
   color: var(--color-cocoa);
+  background-color: var(--color-milk);
+  /* Soft polka-dot "sprinkles" backdrop. */
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 183, 3, 0.14) 1.5px,
+    transparent 1.6px
+  );
+  background-size: 22px 22px;
+}
+
+/* Chunky retro wordmark treatment. */
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-shadow: 2px 2px 0 rgba(67, 41, 28, 0.15);
+}
+
+/* Rainbow underline used under section headings. */
+.rainbow-rule {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--color-berry),
+    var(--color-honey),
+    var(--color-mint),
+    var(--color-sky),
+    var(--color-grape)
+  );
 }

@@ -17,15 +17,21 @@ export default async function TagPage({
 
   return (
     <div>
-      <Link href="/" className="text-sm text-berry hover:underline">
+      <Link
+        href="/"
+        className="inline-block text-sm font-extrabold uppercase tracking-wide text-berry hover:underline"
+      >
         ← Back to feed
       </Link>
-      <h1 className="text-3xl font-black text-cocoa mt-4 mb-8">
+      <h1 className="wordmark text-3xl sm:text-4xl text-grape mt-4">
         #{decoded}
       </h1>
+      <div className="rainbow-rule w-24 mt-2 mb-8" />
 
       {combos.length === 0 ? (
-        <p className="text-cocoa/50">No combos tagged “{decoded}” yet.</p>
+        <p className="text-cocoa/50 font-bold">
+          No combos tagged “{decoded}” yet.
+        </p>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2">
           {combos.map((combo) => (
